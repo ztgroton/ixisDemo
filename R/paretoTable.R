@@ -1,5 +1,5 @@
 
-#' Descending Rank of Column Values
+#' Rank of Descending Values (Largest to Smallest)
 #'
 #' @param data data.frame
 #' @param x character
@@ -34,7 +34,38 @@ calcDescRank <- function(data, x) {
   
 }
 
-#' Cumulative Percentage of Total Sum
+#' Percentage of Total Sum (Ordered by Rank of Descending Values)
+#'
+#' @param data data.frame
+#' @param x character - must be length 1
+#'
+#' @return data.frame
+#' @export
+#'
+#' @examples
+#' \dontrun{
+#'   pctSumDesc(data = sessionCounts, x = 'sessions')
+#'   pctSumDesc(data = sessionCounts, x = 'transactions')
+#'   pctSumDesc(data = sessionCounts, x = 'QTY')
+#' }
+pctSumDesc <- function(data, x) {
+  
+  # validate inputs 
+  stopifnot(is.data.frame(data))
+  stopifnot(is.colname(data, x, scalar = TRUE))
+  
+  # order 'data' by 'desc(x)'
+  data <- data[order(data[[x]], decreasing = TRUE), ]
+  
+  # calculate cumulative percent of total sum
+  data[[paste0('pct_', x)]] <- data[[x]]/sum(data[[x]])
+  
+  # return data
+  return(data)
+  
+}
+
+#' Cumulative Percentage of Total Sum (Ordered by Rank of Descending Values)
 #'
 #' @param data data.frame
 #' @param x character - must be length 1
@@ -58,7 +89,7 @@ cumPctSumDesc <- function(data, x) {
   data <- data[order(data[[x]], decreasing = TRUE), ]
   
   # calculate cumulative percent of total sum
-  data[[paste0('pct_', x)]] <- cumsum(data[[x]])/sum(data[[x]])
+  data[[paste0('cum_pct_', x)]] <- cumsum(data[[x]])/sum(data[[x]])
   
   # return data
   return(data)
@@ -107,8 +138,8 @@ toParetoTable <- function(data = NULL,
   # for each summarised measure, compute rank (desc values)
   data <- calcDescRank(data, x = vals)
   
-  # for each summarised measure, compute percent of total sum (desc values)
-  for (x in vals) {data <- cumPctSumDesc(data, x)}
+  # for each summarised measure, compute percentages of total sum
+  for (x in vals) {data <- cumPctSumDesc(pctSumDesc(data, x), x)}
   
   # order data using 'desc_by'
   data <- data[order(data[[desc_by]], decreasing = TRUE), ]

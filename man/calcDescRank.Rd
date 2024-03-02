@@ -2,7 +2,7 @@
 % Please edit documentation in R/paretoTable.R
 \name{calcDescRank}
 \alias{calcDescRank}
-\title{Descending Rank of Column Values}
+\title{Rank of Descending Values (Largest to Smallest)}
 \usage{
 calcDescRank(data, x)
 }
@@ -15,7 +15,7 @@ calcDescRank(data, x)
 data.frame
 }
 \description{
-Descending Rank of Column Values
+Rank of Descending Values (Largest to Smallest)
 }
 \examples{
 \dontrun{

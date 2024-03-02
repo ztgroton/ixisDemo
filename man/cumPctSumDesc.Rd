@@ -2,7 +2,7 @@
 % Please edit documentation in R/paretoTable.R
 \name{cumPctSumDesc}
 \alias{cumPctSumDesc}
-\title{Cumulative Percentage of Total Sum}
+\title{Cumulative Percentage of Total Sum (Ordered by Rank of Descending Values)}
 \usage{
 cumPctSumDesc(data, x)
 }
@@ -15,7 +15,7 @@ cumPctSumDesc(data, x)
 data.frame
 }
 \description{
-Cumulative Percentage of Total Sum
+Cumulative Percentage of Total Sum (Ordered by Rank of Descending Values)
 }
 \examples{
 \dontrun{
